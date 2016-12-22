@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/action_friends"
+        android:orderInCategory="100"
+        android:title="@string/action_friends"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_wekume"
+        android:orderInCategory="100"
+        android:title="@string/action_wekume"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_about_us"
+        android:orderInCategory="100"
+        android:title="@string/action_about_us"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/search"
+        android:title="@string/search_title"
+        android:icon="@drawable/ic_search_24dp"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
+
+
+    <item
+        android:id="@+id/action_user"
+        android:orderInCategory="300"
+        android:title="User"
+        android:icon="@drawable/ic_user_24dp"
+        app:showAsAction="ifRoom"/>
+
+</menu>

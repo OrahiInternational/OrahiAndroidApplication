@@ -1,0 +1,62 @@
+
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.malmike21.orahiapp.activities.MapsActivity" >
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar_main" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/my_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="@dimen/fab_mini_margin"
+            android:layout_marginBottom="170dp"
+            android:visibility="invisible"
+            map:backgroundTint="@color/colorPosition"
+            map:elevation="6dp"
+            map:fabSize="mini"
+            map:srcCompat="@drawable/ic_my_location_24dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/directions"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="@dimen/fab_mini_margin"
+            android:layout_marginBottom="125dp"
+            android:visibility="invisible"
+            map:backgroundTint="@color/colorDirection"
+            map:elevation="6dp"
+            map:fabSize="mini"
+            map:srcCompat="@drawable/ic_directions_24dp" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/map_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="@dimen/fab_mini_margin"
+            android:layout_marginBottom="80dp"
+            android:visibility="invisible"
+            map:backgroundTint="@color/colorRefresh"
+            map:elevation="6dp"
+            map:fabSize="mini"
+            map:srcCompat="@drawable/ic_refresh_24dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/show_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            map:elevation="6dp"
+            map:backgroundTint="@color/colorAdd"
+            map:srcCompat="@drawable/ic_add_24dp" />
+    </fragment>
