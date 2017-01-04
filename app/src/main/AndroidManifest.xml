@@ -15,6 +15,8 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -44,7 +46,7 @@
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
              sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -53,31 +55,35 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <!--<meta-data android:name="android.app.default_searchable"
-            android:value=".app.SearchResultsActivity" />-->
+        <!--
+            <meta-data android:name="android.app.default_searchable"
+            android:value=".app.SearchResultsActivity" />
+        -->
 
         <activity
             android:name=".activities.ServiceActivity"
             android:label="@string/title_activity_service"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".activities.SearchResultsActivity"
+        <activity
+            android:name=".activities.SearchResultsActivity"
             android:label="SearchResultActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
+
+            <meta-data
+                android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
         <activity
             android:name=".activities.MapsActivity"
-            android:label="@string/title_activity_maps" >
+            android:label="@string/title_activity_maps">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".activities.SearchResultsActivity" />
         </activity>
-
+        <activity android:name=".activities.EmergencyResponder" />
+        <activity android:name=".activities.AutoResponder"></activity>
     </application>
 
 </manifest>

@@ -71,6 +71,25 @@ public class GridCategoryActivity extends AppCompatActivity implements CategoryF
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+         switch(item.getItemId()){
+
+
+             case R.id.action_wekume:
+                 Intent intent = new Intent(this, EmergencyResponder.class);
+
+
+                 startActivity(intent);
+                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                 break;
+
+         }
+        return super.onOptionsItemSelected(item);
+
+    }
 
     @Override
     public void onListFragmentInteraction(Category category) {
@@ -96,6 +115,7 @@ public class GridCategoryActivity extends AppCompatActivity implements CategoryF
                     Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                     startActivity(intent);
                     finish();
+                    overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                     progressDialog.dismiss();
                 }
                 else{

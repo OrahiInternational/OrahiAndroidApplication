@@ -22,7 +22,7 @@ public class Constants {
     //URL constant
     public static String GOOGLE_MAPS_URL = "https://maps.googleapis.com/";
 
-    public static final String BASE_URL = "http://orahi.cloudapp.net/";
+    public static final String BASE_URL = "https://orahirestapi.herokuapp.com/";
     public static final String REGISTER_OPERATION = "register";
     public static final String LOGIN_OPERATION = "login";
     public static final String CHANGE_PASSWORD_OPERATION = "chgPass";

@@ -69,5 +69,7 @@ dependencies {
     compile 'com.nightonke:boommenu:1.0.9'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.azoft.carousellayoutmanager:carousel:1.1.9'
+    compile 'com.github.moondroid.coverflow:library:1.0'
+
     testCompile 'junit:junit:4.12'
 }
