@@ -34,7 +34,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <serviceCategory android:name="android.intent.serviceCategory.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.LoginActivity" />
@@ -83,7 +83,12 @@
                 android:value=".activities.SearchResultsActivity" />
         </activity>
         <activity android:name=".activities.EmergencyResponder" />
-        <activity android:name=".activities.AutoResponder"></activity>
+        <activity android:name=".activities.AutoResponder" />
+        <activity android:name=".activities.ImageDetailsActivity" />
+        <activity
+            android:name=".activities.ServiceProviderActivity"
+            android:label="@string/title_activity_services"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     //private static final int REQUEST_SIGNUP = 0;
 
     EditText _emailText;
+    TextView _anyThing;
     EditText _passwordText;
     Button _loginButton;
     TextView _signupLink;
@@ -50,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         _passwordText = (EditText) findViewById(R.id.input_password);
         _loginButton = (Button) findViewById(R.id.btn_login);
         _signupLink = (TextView) findViewById(R.id.link_signup);
+        /*_anyThing = (TextView) findViewById(R.id.anyThing);*/
         session = new UserSessionManager(getApplicationContext());
 
 
@@ -132,8 +134,13 @@ public class LoginActivity extends AppCompatActivity {
                 else{
                     String message;
                     GeneralResponse resp = ErrorUtils.parseError(retrofitBuilder, response);
-                    if(resp.getMessage() != null){  message = resp.getMessage();}
-                    else{ message = "Login Failed";}
+
+
+                    Log.d(Constants.TAG, response.errorBody().toString());
+                    message = resp.getMessage();
+                    /*if(resp.getMessage() != null){  message = resp.getMessage();}
+                    else{ message = "Login Failed";}*/
+                    /*_anyThing.setText(response.errorBody().toString());*/
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     _loginButton.setEnabled(true);
                     progressDialog.dismiss();
@@ -143,7 +150,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GeneralResponse> call, Throwable t) {
                 Log.d(Constants.TAG,"failed");
-                onLoginFailed();
+                String message = "Login Failed. Check your internet connection";
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                _loginButton.setEnabled(true);
                 progressDialog.dismiss();
             }
         });

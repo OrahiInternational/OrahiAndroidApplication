@@ -37,6 +37,7 @@
     <string name="autoRespondDurationPrompt">Auto-respond for</string>
     <string name="enableButtonText">Enable</string>
     <string name="disableButtonText">Disable</string>
+    <string name="title_activity_services">ServicesActivity</string>
 
 
 </resources>

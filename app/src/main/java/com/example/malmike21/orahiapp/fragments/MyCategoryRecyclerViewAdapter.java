@@ -8,26 +8,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.malmike21.orahiapp.POJO.Category;
+import com.example.malmike21.orahiapp.POJO.ServiceCategory;
 import com.example.malmike21.orahiapp.fragments.CategoryFragment.OnListFragmentInteractionListener;
-import com.example.malmike21.orahiapp.fragments.dummy.DummyContent.DummyItem;
 import com.example.malmike21.orahiapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link ServiceCategory} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Category> mValues;
+    private final List<ServiceCategory> mValues;
     private final OnListFragmentInteractionListener mListener;
     private Context context;
 
-    public MyCategoryRecyclerViewAdapter(List<Category> categories, OnListFragmentInteractionListener listener) {
+    public MyCategoryRecyclerViewAdapter(List<ServiceCategory> categories, OnListFragmentInteractionListener listener) {
         mValues = categories;
         mListener = listener;
     }
@@ -71,7 +70,7 @@ public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCatego
         public final View mView;
         public final ImageView mImageView;
         public final TextView mNameView;
-        public Category mItem;
+        public ServiceCategory mItem;
 
         public ViewHolder(View view) {
             super(view);

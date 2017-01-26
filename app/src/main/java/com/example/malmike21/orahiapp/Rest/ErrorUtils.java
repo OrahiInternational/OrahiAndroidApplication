@@ -21,7 +21,8 @@ public class ErrorUtils {
         Converter<ResponseBody, GeneralResponse> converter = retrofitBuilder.getRetrofit()
                 .responseBodyConverter(GeneralResponse.class, new Annotation[0]);
 
-        GeneralResponse error;
+        GeneralResponse error = new GeneralResponse();
+        error.setMessage("Error retrieving data");
 
         try {
             error = converter.convert(response.errorBody());

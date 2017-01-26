@@ -50,6 +50,17 @@ public class Service {
     @Expose
     private String rate;
 
+    @SerializedName("category")
+    @Expose
+    private Category category;
+    @SerializedName("inCategory")
+    @Expose
+    private Boolean inCategory;
+
+    @SerializedName("bookDate")
+    @Expose
+    private String bookDate;
+
     public String getId() {
         return id;
     }
@@ -170,4 +181,27 @@ public class Service {
         this.rate = rate;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Boolean getInCategory() {
+        return inCategory;
+    }
+
+    public void setInCategory(Boolean inCategory) {
+        this.inCategory = inCategory;
+    }
+
+    public String getBookDate() {
+        return bookDate;
+    }
+
+    public void setBookDate(String bookDate) {
+        this.bookDate = bookDate;
+    }
 }

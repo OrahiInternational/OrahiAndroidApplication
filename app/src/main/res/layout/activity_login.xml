@@ -62,5 +62,12 @@
             android:gravity="center"
             android:textSize="16dip"/>
 
+        <!--<TextView android:id="@+id/anyThing"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Can change this any time?"
+            android:gravity="center"
+            android:textSize="16dip"/>
+-->
     </LinearLayout>
 </ScrollView>

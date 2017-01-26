@@ -1,6 +1,7 @@
 package com.example.malmike21.orahiapp.sessionManager;
 
 import com.example.malmike21.orahiapp.POJO.Category;
+import com.example.malmike21.orahiapp.POJO.ServiceCategory;
 import com.example.malmike21.orahiapp.POJO.GeneralResponse;
 import com.example.malmike21.orahiapp.POJO.Service;
 import com.example.malmike21.orahiapp.POJO.ServiceProvider;
@@ -14,18 +15,35 @@ import java.util.List;
 
 public class SharedInformation {
 
+    /*private static SharedInformation instance = new SharedInformation();
+    private User user;
+    private List<ServiceProvider> serviceProviders;
+    private GeneralResponse generalResponse;
+    private int snippetChosen;
+    private List<Service> services;
+    private ServiceCategory serviceCategory;
+    private List<ServiceCategory> categories;
+    private ServiceProvider serviceProvider;
+    private boolean searchProcess;
+    private boolean callSearch;
+    private String message;*/
+
     private static SharedInformation instance = new SharedInformation();
     private User user;
     private List<ServiceProvider> serviceProviders;
     private GeneralResponse generalResponse;
     private int snippetChosen;
     private List<Service> services;
-    private Category category;
-    private List<Category> categories;
+    private ServiceCategory serviceCategory;
+    private List<ServiceCategory> serviceCategories;
     private ServiceProvider serviceProvider;
     private boolean searchProcess;
     private boolean callSearch;
     private String message;
+    private Service service;
+    private List<String> imageURIs;
+    private int imageNumber;
+    private List<Category> categories;
 
     private SharedInformation(){}
 
@@ -71,20 +89,20 @@ public class SharedInformation {
         this.services = services;
     }
 
-    public Category getCategory() {
-        return category;
+    public ServiceCategory getServiceCategory() {
+        return serviceCategory;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setServiceCategory(ServiceCategory serviceCategory) {
+        this.serviceCategory = serviceCategory;
     }
 
-    public List<Category> getCategories() {
-        return categories;
+    public List<ServiceCategory> getServiceCategories() {
+        return serviceCategories;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setServiceCategories(List<ServiceCategory> serviceCategories) {
+        this.serviceCategories = serviceCategories;
     }
 
     public ServiceProvider getServiceProvider() {
@@ -93,6 +111,14 @@ public class SharedInformation {
 
     public void setServiceProvider(ServiceProvider serviceProvider) {
         this.serviceProvider = serviceProvider;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 
     public boolean isSearchProcess() {
@@ -117,5 +143,29 @@ public class SharedInformation {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public List<String> getImageURIs() {
+        return imageURIs;
+    }
+
+    public void setImageURIs(List<String> imageURIs) {
+        this.imageURIs = imageURIs;
+    }
+
+    public int getImageNumber() {
+        return imageNumber;
+    }
+
+    public void setImageNumber(int imageNumber) {
+        this.imageNumber = imageNumber;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }

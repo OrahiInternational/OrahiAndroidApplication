@@ -11,14 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.example.malmike21.orahiapp.POJO.Category;
-import com.example.malmike21.orahiapp.POJO.CreateCategories;
-import com.example.malmike21.orahiapp.fragments.dummy.DummyContent;
-import com.example.malmike21.orahiapp.fragments.dummy.DummyContent.DummyItem;
+import com.example.malmike21.orahiapp.POJO.ServiceCategory;
+import com.example.malmike21.orahiapp.POJO.CreateServiceCategories;
 import com.example.malmike21.orahiapp.R;
 import com.example.malmike21.orahiapp.sessionManager.SharedInformation;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -75,9 +71,9 @@ public class CategoryFragment extends Fragment {
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            CreateCategories categories = new CreateCategories();
-            SharedInformation.getInstance().setCategories(categories.getCategories());
-            recyclerView.setAdapter(new MyCategoryRecyclerViewAdapter(categories.getCategories(), mListener));
+            CreateServiceCategories serviceCategories = new CreateServiceCategories();
+            SharedInformation.getInstance().setServiceCategories(serviceCategories.getServiceCategories());
+            recyclerView.setAdapter(new MyCategoryRecyclerViewAdapter(serviceCategories.getServiceCategories(), mListener));
         }
         return view;
     }
@@ -112,6 +108,6 @@ public class CategoryFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Category category);
+        void onListFragmentInteraction(ServiceCategory serviceCategory);
     }
 }

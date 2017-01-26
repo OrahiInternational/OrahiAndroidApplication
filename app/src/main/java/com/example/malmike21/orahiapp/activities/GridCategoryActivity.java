@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.malmike21.orahiapp.POJO.Category;
+import com.example.malmike21.orahiapp.POJO.ServiceCategory;
 import com.example.malmike21.orahiapp.POJO.GeneralResponse;
 import com.example.malmike21.orahiapp.POJO.ServiceProvider;
 import com.example.malmike21.orahiapp.R;
@@ -66,10 +68,12 @@ public class GridCategoryActivity extends AppCompatActivity implements CategoryF
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem action_search = menu.findItem(R.id.search);
-        action_search.setVisible(false);
+        //MenuItem action_search = menu.findItem(R.id.search);
+        //action_search.setVisible(false);
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -81,9 +85,15 @@ public class GridCategoryActivity extends AppCompatActivity implements CategoryF
              case R.id.action_wekume:
                  Intent intent = new Intent(this, EmergencyResponder.class);
 
-
                  startActivity(intent);
                  overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                 break;
+
+             case R.id.search:
+                 Intent intentSearch = new Intent(this, LoginActivity.class);
+                 startActivity(intentSearch);
+                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                 finish();
                  break;
 
          }
@@ -92,8 +102,8 @@ public class GridCategoryActivity extends AppCompatActivity implements CategoryF
     }
 
     @Override
-    public void onListFragmentInteraction(Category category) {
-        SharedInformation.getInstance().setCategory(category);
+    public void onListFragmentInteraction(ServiceCategory serviceCategory) {
+        SharedInformation.getInstance().setServiceCategory(serviceCategory);
         final ProgressDialog progressDialog = new ProgressDialog(GridCategoryActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
@@ -101,7 +111,7 @@ public class GridCategoryActivity extends AppCompatActivity implements CategoryF
         progressDialog.show();
 
         RequestInterface requestInterface = retrofitBuilder.getRetrofit().create(RequestInterface.class);
-        Call<List<ServiceProvider>> response = requestInterface.serviceProviderList(category.getName());
+        Call<List<ServiceProvider>> response = requestInterface.serviceProviderList(serviceCategory.getName());
         response.enqueue(new Callback<List<ServiceProvider>>(){
 
             @Override
@@ -120,6 +130,9 @@ public class GridCategoryActivity extends AppCompatActivity implements CategoryF
                 }
                 else{
                     GeneralResponse resp = ErrorUtils.parseError(retrofitBuilder, response);
+                    if(resp.getMessage() == null){
+                        resp.setMessage("Error retrieving data");
+                    }
                     Toast.makeText(getApplicationContext(), resp.getMessage(), Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 }
@@ -129,10 +142,15 @@ public class GridCategoryActivity extends AppCompatActivity implements CategoryF
             public void onFailure(Call<List<ServiceProvider>> call, Throwable t) {
                 Log.d(Constants.TAG,"failed");
                 // Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
-                Toast.makeText(getBaseContext(), "Data retrieval failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Data retrieval failed. Check your internet connection", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        // Disable going back to the MainActivity
+        moveTaskToBack(false);
     }
 }

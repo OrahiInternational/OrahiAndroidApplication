@@ -97,6 +97,12 @@ public class MapsActivity extends AppCompatActivity implements   View.OnClickLis
     LatLng destLatLng;
     boolean isFabOpen = false;
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), GridCategoryActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +124,6 @@ public class MapsActivity extends AppCompatActivity implements   View.OnClickLis
         // add back arrow to toolbar
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -216,7 +221,7 @@ public class MapsActivity extends AppCompatActivity implements   View.OnClickLis
 
                 @Override
                 public void onFailure(Call<DirectionResults> call, Throwable t) {
-                    String message = "Getting directions Failed";
+                    String message = "Getting directions Failed, Check your internet connection";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 }
@@ -266,8 +271,16 @@ public class MapsActivity extends AppCompatActivity implements   View.OnClickLis
                 rectLine.add(routelist.get(i));
             }
             // Adding route on the map
+            mGoogleMap.clear();
             mGoogleMap.addPolyline(rectLine);
             MarkerOptions markerOptions = new MarkerOptions();
+
+            MarkerOptions myLocationMarker = new MarkerOptions();
+            myLocationMarker.position(latLng);
+            myLocationMarker.title("Current Position");
+            myLocationMarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+            mGoogleMap.addMarker(myLocationMarker);
+
             markerOptions.position(destLatLng);
             markerOptions.draggable(true);
             mGoogleMap.addMarker(markerOptions);
@@ -560,79 +573,35 @@ public class MapsActivity extends AppCompatActivity implements   View.OnClickLis
         }else {
             resultServiceProvider = information.getServiceProvider();
         }
-        final ProgressDialog progressDialog = new ProgressDialog(MapsActivity.this,
-                R.style.AppTheme_Dark_Dialog);
+
+        fixedService();
+    }
+
+
+    public void fixedService(){
+        final ProgressDialog progressDialog = new ProgressDialog(MapsActivity.this, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Searching data...");
         progressDialog.show();
 
         RequestInterface requestInterface = retrofitBuilder.getRetrofit().create(RequestInterface.class);
-        Call<List<Service>> response = requestInterface.serviceList(resultServiceProvider.getId());
-        response.enqueue(new Callback<List<Service>>(){
-
+        Call<List<Service>> servicesCall = requestInterface.serviceList(SharedInformation.getInstance().getServiceProvider().getId());
+        servicesCall.enqueue(new Callback<List<Service>>() {
             @Override
             public void onResponse(Call<List<Service>> call, Response<List<Service>> response) {
                 if(response.isSuccessful()){
                     List<Service> services = response.body();
-                    information.setServices(services);
-                    String name = resultServiceProvider.getName();
-                    int size = services.size();
-                    /*Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                    startActivity(intent);
-                    finish();*/
-
-                    Category category = information.getCategory();
-                    switch (category.getName()){
-                        case "Hotel":
-                            if(size != 0) {
-                                Toast.makeText(getApplicationContext(), name + " has " + String.valueOf(size) +" Services", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(getApplicationContext(), ServiceActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }else{
-                                Toast.makeText(getApplicationContext(), name + " has " + String.valueOf(size) +" Services", Toast.LENGTH_LONG).show();
-                            }
-                            break;
-                        case "Event":
-                            Toast.makeText(getApplicationContext(), name +" Services Number:"+String.valueOf(size),Toast.LENGTH_LONG).show();
-                            break;
-                        case "Restaurant":
-                            Toast.makeText(getApplicationContext(), name +" Services Number:"+String.valueOf(size),Toast.LENGTH_LONG).show();
-                            break;
-                        case "House":
-                            Toast.makeText(getApplicationContext(), name +" Services Number:"+String.valueOf(size),Toast.LENGTH_LONG).show();
-                            break;
-                        case "Cab":
-                            Toast.makeText(getApplicationContext(), name +" Services Number:"+String.valueOf(size),Toast.LENGTH_LONG).show();
-                            break;
-                        case "Boda-Boda":
-                            Toast.makeText(getApplicationContext(), name +" Services Number:"+String.valueOf(size),Toast.LENGTH_LONG).show();
-                            break;
-                        case "Delivery Service":
-                            int deliverySize = services.size();
-                            Toast.makeText(getApplicationContext(), name +" Services Number:"+String.valueOf(size),Toast.LENGTH_LONG).show();
-                            break;
-                        case "Foreign Exchange":
-                            Toast.makeText(getApplicationContext(), name +" Services Number:"+String.valueOf(size),Toast.LENGTH_LONG).show();
-                            break;
-                        case "Bank":
-                            Toast.makeText(getApplicationContext(), name +" Services Number:"+String.valueOf(size),Toast.LENGTH_LONG).show();
-                            break;
-                        case "Mobile Money Agent":
-                            Toast.makeText(getApplicationContext(), name +" Services Number:"+String.valueOf(size),Toast.LENGTH_LONG).show();
-                            break;
-                        case "Police Station":
-                            Toast.makeText(getApplicationContext(), name +" Services Number:"+String.valueOf(size),Toast.LENGTH_LONG).show();
-                            break;
-                        default:
-                            break;
-                    }
-
+                    SharedInformation.getInstance().setServices(services);
+                    Toast.makeText(getApplicationContext(),"Service list of length "+ services.size() +" got",Toast.LENGTH_LONG).show();
+                    fixedCategory();
                     progressDialog.dismiss();
                 }
                 else{
+                    String message;
                     GeneralResponse resp = ErrorUtils.parseError(retrofitBuilder, response);
-                    Toast.makeText(getApplicationContext(), resp.getMessage(), Toast.LENGTH_LONG).show();
+                    if(resp.getMessage() != null){  message = resp.getMessage();}
+                    else{ message = "Failed to get service provider";}
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 }
             }
@@ -640,12 +609,48 @@ public class MapsActivity extends AppCompatActivity implements   View.OnClickLis
             @Override
             public void onFailure(Call<List<Service>> call, Throwable t) {
                 Log.d(Constants.TAG,"failed");
-                // Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
-                Toast.makeText(getBaseContext(), "Data retrieval failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Failed to get services, check your internet connection", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }
         });
     }
 
+    public void fixedCategory(){
+        final ProgressDialog progressDialog = new ProgressDialog(MapsActivity.this, R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Getting categories...");
+        progressDialog.show();
+
+        RequestInterface requestInterface = retrofitBuilder.getRetrofit().create(RequestInterface.class);
+        Call<List<Category>> categoryCall = requestInterface.categoriesList(SharedInformation.getInstance().getServiceProvider().getId());
+        categoryCall.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if(response.isSuccessful()){
+                    List<Category> categories = response.body();
+                    SharedInformation.getInstance().setCategories(categories);
+                    Toast.makeText(getApplicationContext(),"Service list of length "+ categories.size() +" got",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), ServiceProviderActivity.class);
+                    startActivity(intent);
+                    progressDialog.dismiss();
+                }
+                else{
+                    String message;
+                    GeneralResponse resp = ErrorUtils.parseError(retrofitBuilder, response);
+                    if(resp.getMessage() != null){  message = resp.getMessage();}
+                    else{ message = "Failed to get service category";}
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                Log.d(Constants.TAG,"failed");
+                Toast.makeText(getBaseContext(), "Failed to get categories, check your internet connection", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+            }
+        });
+    }
 
 }

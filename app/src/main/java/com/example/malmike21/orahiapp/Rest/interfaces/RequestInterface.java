@@ -1,5 +1,6 @@
 package com.example.malmike21.orahiapp.Rest.interfaces;
 
+import com.example.malmike21.orahiapp.POJO.Category;
 import com.example.malmike21.orahiapp.POJO.GeneralResponse;
 import com.example.malmike21.orahiapp.POJO.GoogleMapsDirections.DirectionResults;
 import com.example.malmike21.orahiapp.POJO.Service;
@@ -9,7 +10,6 @@ import com.example.malmike21.orahiapp.POJO.User;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -52,6 +52,9 @@ public interface RequestInterface {
     @POST( "api/user/registerUser")
     Call<GeneralResponse> registerUser (@Body User user);
 
+    @POST( "api/user/makePayment")
+    Call<GeneralResponse> makePayment (@Body Service service);
+
     //@POST( "api/user/registerUser")
     //Call<RegisterResponse> registerUser (@Body RegisterRequest registerRequest);
 
@@ -61,11 +64,16 @@ public interface RequestInterface {
     @GET("api/user/getServices")
     Call<List<Service>> serviceList (@Query("serviceProvider") String serviceProvider);
 
+    @GET("api/user/getCategories")
+    Call<List<Category>> categoriesList (@Query("serviceProvider") String serviceProvider);
+
     @GET("maps/api/directions/json")
     Call<DirectionResults> directionsResults (@Query("origin") String origin,
                                               @Query("destination") String destination,
                                               @Query("sensor") boolean sensor,
                                               @Query("mode") String mode,
                                               @Query("alternatives") boolean alternatives);
+
+
 
 }
